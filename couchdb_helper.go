@@ -39,12 +39,12 @@ func GetStats(con CouchDB) (*kivik.DBStats, error) {
 func GenerateAddress(con CouchDB) string {
 	var address string
 	if con.Password != "" && con.Username != "" {
-		address = fmt.Sprintf("http://%v:%v@%v:%v/", con.Username,
+		address = fmt.Sprintf("%v:%v@%v:%v/", con.Username,
 			con.Password,
 			con.Server,
 			con.Port)
 	} else {
-		address = fmt.Sprintf("http://%v:%v/",
+		address = fmt.Sprintf("%v:%v/",
 			con.Server,
 			con.Port)
 	}
