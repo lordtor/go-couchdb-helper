@@ -1,14 +1,30 @@
 package couchdb_helper
 
 import (
+	"errors"
 	"reflect"
 	"testing"
 
 	_ "github.com/go-kivik/couchdb/v4"
 	kivik "github.com/go-kivik/kivik/v4"
+	"github.com/go-kivik/kivik/v4/driver"
+	"github.com/go-kivik/kivikmock/v4"
 )
 
+// TODO: Read https://github.com/go-kivik/kivikmock/blob/d4ebdf08086151ec454c0c18104688ae5d92f73e/db_test.go
 func TestPutRowDB(t *testing.T) {
+	c, mock, err := kivikmock.New()
+	if err != nil {
+		panic(err)
+	}
+
+	foo := mock.NewDB()
+	bar := mock.NewDB()
+	mock.ExpectDB().WithName("foo").WillReturn(foo)
+	foo.ExpectPut().WillReturn("123")
+	mock.ExpectDB().WithName("bar").WillReturn(bar)
+	bar.ExpectPut().WillReturnError(errors.New("foo err"))
+
 	type args struct {
 		db  *kivik.DB
 		id  string
@@ -20,6 +36,8 @@ func TestPutRowDB(t *testing.T) {
 		wantRev string
 		wantErr bool
 	}{
+		{"1", args{c.DB("foo"), "q", map[string]string{"id": "q", "f": "ff"}}, "123", false},
+		{"2", args{c.DB("bar"), "q", map[string]string{"id": "q", "f": "ff"}}, "", true},
 		// TODO: Add test cases.
 	}
 	for _, tt := range tests {
@@ -37,6 +55,7 @@ func TestPutRowDB(t *testing.T) {
 }
 
 func TestGetStats(t *testing.T) {
+
 	type args struct {
 		con CouchDB
 	}
@@ -216,6 +235,18 @@ func TestCheckDB(t *testing.T) {
 }
 
 func TestGetRowDB(t *testing.T) {
+	c, mock, err := kivikmock.New()
+	if err != nil {
+		panic(err)
+	}
+
+	foo := mock.NewDB()
+	bar := mock.NewDB()
+	mock.ExpectDB().WithName("foo").WillReturn(foo)
+	foo.ExpectGet().WillReturn(&driver.Document{Rev: "2-bar"})
+	mock.ExpectDB().WithName("bar").WillReturn(bar)
+	bar.ExpectGet().WillReturnError(errors.New("foo err"))
+
 	type args struct {
 		db *kivik.DB
 		id string
@@ -225,6 +256,7 @@ func TestGetRowDB(t *testing.T) {
 		args args
 		want *kivik.Row
 	}{
+		{"1", args{c.DB("foo"), "q"}, &kivik.Row{Rev: "2-bar"}},
 		// TODO: Add test cases.
 	}
 	for _, tt := range tests {
