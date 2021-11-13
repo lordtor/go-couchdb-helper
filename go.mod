@@ -8,9 +8,16 @@ require (
 	github.com/lordtor/go-logging v0.1.2
 )
 
+require github.com/go-kivik/kivik v2.0.0+incompatible // indirect
+
 require (
+	github.com/go-kivik/kivikmock v2.0.0+incompatible
+	github.com/go-kivik/kivikmock/v4 v4.0.0-20201011105747-d4ebdf080861
+	github.com/golang/mock v1.4.4 // indirect
 	github.com/sirupsen/logrus v1.8.1 // indirect
-	golang.org/x/net v0.0.0-20211111083644-e5c967477495 // indirect
-	golang.org/x/sys v0.0.0-20211110154304-99a53858aa08 // indirect
+	golang.org/x/mod v0.3.0 // indirect
+	golang.org/x/net v0.0.0-20210226172049-e18ecbb05110 // indirect
+	golang.org/x/sys v0.0.0-20210403161142-5e06dd20ab57 // indirect
+	golang.org/x/tools v0.1.0 // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 )
