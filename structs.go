@@ -5,7 +5,7 @@ type CouchDB struct {
 	Server      string   `yaml:"server"`
 	Port        string   `yaml:"port"`
 	Username    string   `yaml:"username"`
-	Password    string   `yaml:"password"`
+	Password    string   `yaml:"password" json:"-"`
 	Name        string   `yaml:"name"`
 	IndexFields []string `yaml:"indexFields"`
 }
