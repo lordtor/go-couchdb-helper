@@ -1,11 +1,11 @@
 package couchdb_helper
 
 type CouchDB struct {
-	Schema      string   `yaml:"schema"`
-	Server      string   `yaml:"server"`
-	Port        string   `yaml:"port"`
-	Username    string   `yaml:"username"`
-	Password    string   `yaml:"password" json:"-"`
-	Name        string   `yaml:"name"`
-	IndexFields []string `yaml:"indexFields"`
+	Schema      string   `json:"schema" yaml:"schema"`
+	Server      string   `json:"server" yaml:"server"`
+	Port        string   `json:"port" yaml:"port"`
+	Username    string   `json:"username" yaml:"username"`
+	Password    string   `json:"-" yaml:"password" json:"-"`
+	Name        string   `json:"name" yaml:"name"`
+	IndexFields []string `json:"indexFields" yaml:"indexFields"`
 }
