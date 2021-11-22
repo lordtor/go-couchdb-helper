@@ -1,4 +1,4 @@
-module module github.com/lordtor/go-couchdb-helper
+module github.com/lordtor/go-couchdb-helper
 
 go 1.17
 
