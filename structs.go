@@ -1,4 +1,4 @@
-package couchdb_helper
+package go_couchdb_helper
 
 type CouchDB struct {
 	Schema      string   `json:"schema" yaml:"schema"`

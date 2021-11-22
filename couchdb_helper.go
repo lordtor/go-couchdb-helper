@@ -1,4 +1,4 @@
-package couchdb_helper
+package go_couchdb_helper
 
 import (
 	"context"
