@@ -191,3 +191,24 @@ func FindRow(db *kivik.DB, queryFields map[string]string, bookmark string, field
 	}
 	return docs, len(docs), rows.Bookmark(), nil
 }
+
+func CleanDeleted(db *kivik.DB) (bool, error) {
+	changes, err := db.Changes(context.Background())
+	if err != nil {
+		log.Error(err)
+		return false, err
+	}
+	for changes.Next() {
+		if changes.Deleted() {
+			forDel := map[string][]string{}
+			forDel[changes.ID()] = changes.Changes()
+			PurgeResult, err := db.Purge(context.Background(), forDel)
+			log.Debug(PurgeResult)
+			if err != nil {
+				log.Error(err)
+				return false, err
+			}
+		}
+	}
+	return true, nil
+}
